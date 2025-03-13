@@ -42,6 +42,6 @@ object Ex_emAula {
 //    (l foldRight 0)((x, r) => (1 + r._1, x + r._2)
 //  } exercicio inventado pelo  stor que retorna (Tamanho, somatório)
 
-//implicit é passar a funcao sem usar o parametro   
+//implicit é passar a funcao sem usar o parametro
 
 }
