@@ -1,6 +1,6 @@
 package Semana4
 
-object Ex_1 {
+object Semana4 {
 
   def concatFR[E](a: List[E], b: List[E]): List[E] = {
     (a foldRight b)((x, r) => x :: r) //:: (usado no foldRight) é rápido (O(1)) porque adiciona um elemento na frente da lista.
@@ -96,15 +96,28 @@ object Ex_1 {
     )
   }
 
-  def main(args: Array[String]): Unit = {
-    val fixtures: Fixtures = List(
-      (("TeamA", 2), ("TeamB", 1)), // TeamA vence (3 pts)
-      (("TeamC", 1), ("TeamD", 3)), // TeamD vence (3 pts)
-      (("TeamE", 0), ("TeamF", 0)), // Empate (1 pt cada)
-      (("TeamA", 1), ("TeamC", 1)) // Empate (1 pt cada)
-    )
+  type Pol = List[(Float, Int)]
 
-    println(pointsFR(fixtures))
-    // Esperado: List((TeamA, 4), (TeamB, 0), (TeamC, 1), (TeamD, 3), (TeamE, 1), (TeamF, 1))
+  def orderPol(a : Pol) : Pol = {
+    def insert(x : (Float, Int), t : Pol) : Pol = t match {
+      case Nil => List(x)
+      case primeiro :: tail =>
+        if(x._2 <= primeiro._2)
+          x :: t
+        else
+          primeiro :: insert(x, tail)
+    }
+    def sort(t : Pol): Pol = t match {
+      case Nil => Nil
+      case primeiro :: Nil => List(primeiro)
+      case primeiro :: tail => insert(primeiro, sort(tail))
+    }
+    sort(a)
+  }
+
+  def main(args: Array[String]): Unit = {
+    val polinomio = List((3.4f, 3), (2.0f, 4), (1.5f, 3), (7.1f, 5))
+    val polinomioOrdenado = orderPol(polinomio)
+    println(polinomioOrdenado)
   }
 }
